@@ -308,7 +308,7 @@ st.markdown("""
     <div class="privacy-banner-icon">🔒</div>
     <div class="privacy-banner-text">
         <strong>個人情報の取り扱いについて</strong><br>
-        このツールはGitHubに公開されている情報のみを取得します。取得したデータはお使いのブラウザ上でのみ処理され、外部サーバーへの保存・送信は一切行いません。候補者の個人情報は採用選考の目的にのみご利用ください。
+        このツールはGitHubに公開されている情報のみを取得します。取得したデータはお使いのブラウザ上でのみ処理され、外部サーバーへの保存・送信は一切行いません。
     </div>
 </div>
 """, unsafe_allow_html=True)
