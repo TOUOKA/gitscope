@@ -21,7 +21,6 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 #MainMenu, footer, header { visibility: hidden; }
 .block-container { padding: 0 !important; max-width: 100% !important; }
 
-/* Hero */
 .hero {
     background: linear-gradient(135deg, #0a0a0f 0%, #1a1040 50%, #0a0a0f 100%);
     border-bottom: 1px solid rgba(139, 92, 246, 0.2);
@@ -43,16 +42,9 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
     width: 400px; height: 400px;
     background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
 }
-.hero-badges {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
+.hero-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
 .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+    display: inline-flex; align-items: center; gap: 6px;
     background: rgba(139, 92, 246, 0.15);
     border: 1px solid rgba(139, 92, 246, 0.3);
     color: #a78bfa;
@@ -66,34 +58,24 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
     color: #6ee7b7;
 }
 .hero h1 {
-    font-size: 48px; font-weight: 700; line-height: 1.1;
-    margin: 0 0 16px;
+    font-size: 48px; font-weight: 700; line-height: 1.1; margin: 0 0 16px;
     background: linear-gradient(135deg, #ffffff 0%, #a78bfa 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .hero p { font-size: 18px; color: #94a3b8; margin: 0; max-width: 560px; line-height: 1.6; }
 
-/* Privacy notice banner */
 .privacy-banner {
     background: rgba(16, 185, 129, 0.07);
     border: 1px solid rgba(16, 185, 129, 0.2);
-    border-radius: 12px;
-    padding: 14px 20px;
-    margin-bottom: 28px;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    border-radius: 12px; padding: 14px 20px; margin-bottom: 28px;
+    display: flex; align-items: flex-start; gap: 12px;
 }
 .privacy-banner-icon { font-size: 18px; line-height: 1.5; flex-shrink: 0; }
 .privacy-banner-text { font-size: 13px; color: #a7f3d0; line-height: 1.7; }
 .privacy-banner-text strong { color: #6ee7b7; font-weight: 600; }
 
-/* Main content */
 .main-content { padding: 48px 80px; max-width: 1200px; margin: 0 auto; }
 
-/* Search card */
 .search-card {
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.08);
@@ -104,19 +86,15 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
     letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 12px;
 }
 
-/* Input */
 .stTextInput > div > div > input {
     background: #1e1b2e !important;
     border: 1.5px solid rgba(139, 92, 246, 0.25) !important;
     border-radius: 12px !important;
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
+    color: #ffffff !important; -webkit-text-fill-color: #ffffff !important;
     caret-color: #a78bfa !important;
     font-family: 'Inter', sans-serif !important;
-    font-size: 16px !important;
-    font-weight: 400 !important;
-    padding: 14px 18px !important;
-    height: auto !important;
+    font-size: 16px !important; font-weight: 400 !important;
+    padding: 14px 18px !important; height: auto !important;
     transition: all 0.2s ease !important;
 }
 .stTextInput > div > div > input:focus {
@@ -125,9 +103,7 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
     background: #221d38 !important;
 }
 .stTextInput > div > div > input::placeholder {
-    color: #4a4569 !important;
-    -webkit-text-fill-color: #4a4569 !important;
-    font-style: italic !important;
+    color: #4a4569 !important; -webkit-text-fill-color: #4a4569 !important; font-style: italic !important;
 }
 .stTextInput > div > div > input:-webkit-autofill,
 .stTextInput > div > div > input:-webkit-autofill:focus {
@@ -135,11 +111,9 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
     -webkit-text-fill-color: #ffffff !important;
 }
 
-/* Button */
 .stButton > button {
     background: linear-gradient(135deg, #7c3aed, #4f46e5) !important;
-    color: white !important; border: none !important;
-    border-radius: 12px !important;
+    color: white !important; border: none !important; border-radius: 12px !important;
     font-family: 'Inter', sans-serif !important;
     font-size: 15px !important; font-weight: 600 !important;
     padding: 14px 28px !important; height: auto !important; width: 100% !important;
@@ -151,7 +125,6 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
     box-shadow: 0 6px 28px rgba(124, 58, 237, 0.45) !important;
 }
 
-/* Metrics */
 [data-testid="metric-container"] {
     background: rgba(255,255,255,0.03) !important;
     border: 1px solid rgba(255,255,255,0.07) !important;
@@ -160,101 +133,68 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 [data-testid="metric-container"]:hover { border-color: rgba(139, 92, 246, 0.3) !important; }
 [data-testid="stMetricLabel"] {
     font-size: 12px !important; font-weight: 500 !important;
-    letter-spacing: 0.06em !important; text-transform: uppercase !important;
-    color: #64748b !important;
+    letter-spacing: 0.06em !important; text-transform: uppercase !important; color: #64748b !important;
 }
 [data-testid="stMetricValue"] { font-size: 28px !important; font-weight: 700 !important; color: #e2e8f0 !important; }
 
-/* Tabs */
 .stTabs [data-baseweb="tab-list"] {
-    background: rgba(255,255,255,0.03) !important;
-    border-radius: 12px !important; padding: 4px !important;
-    gap: 2px !important; border: 1px solid rgba(255,255,255,0.07) !important;
+    background: rgba(255,255,255,0.03) !important; border-radius: 12px !important;
+    padding: 4px !important; gap: 2px !important; border: 1px solid rgba(255,255,255,0.07) !important;
 }
 .stTabs [data-baseweb="tab"] {
-    background: transparent !important; border-radius: 9px !important;
-    color: #64748b !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 14px !important; font-weight: 500 !important;
-    padding: 8px 18px !important;
+    background: transparent !important; border-radius: 9px !important; color: #64748b !important;
+    font-family: 'Inter', sans-serif !important; font-size: 14px !important;
+    font-weight: 500 !important; padding: 8px 18px !important;
 }
 .stTabs [aria-selected="true"] { background: rgba(139, 92, 246, 0.2) !important; color: #a78bfa !important; }
 .stTabs [data-baseweb="tab-highlight"], .stTabs [data-baseweb="tab-border"] { display: none !important; }
 
-/* Code */
 .stCodeBlock { border-radius: 12px !important; border: 1px solid rgba(255,255,255,0.07) !important; }
 .stCodeBlock pre { background: rgba(255,255,255,0.02) !important; font-size: 13px !important; line-height: 1.7 !important; }
 
-/* Expander */
 .streamlit-expanderHeader {
-    background: rgba(255,255,255,0.03) !important;
-    border: 1px solid rgba(255,255,255,0.07) !important;
+    background: rgba(255,255,255,0.03) !important; border: 1px solid rgba(255,255,255,0.07) !important;
     border-radius: 12px !important; color: #e2e8f0 !important;
-    font-family: 'Inter', sans-serif !important;
-    font-weight: 500 !important; font-size: 14px !important;
-    padding: 14px 18px !important;
+    font-family: 'Inter', sans-serif !important; font-weight: 500 !important;
+    font-size: 14px !important; padding: 14px 18px !important;
 }
 .streamlit-expanderHeader:hover {
-    border-color: rgba(139, 92, 246, 0.3) !important;
-    background: rgba(139, 92, 246, 0.05) !important;
+    border-color: rgba(139, 92, 246, 0.3) !important; background: rgba(139, 92, 246, 0.05) !important;
 }
 .streamlit-expanderContent {
-    background: rgba(255,255,255,0.02) !important;
-    border: 1px solid rgba(255,255,255,0.06) !important;
+    background: rgba(255,255,255,0.02) !important; border: 1px solid rgba(255,255,255,0.06) !important;
     border-top: none !important; border-radius: 0 0 12px 12px !important;
-    padding: 16px 20px !important; color: #94a3b8 !important;
-    font-size: 14px !important; line-height: 1.7 !important;
+    padding: 16px 20px !important; color: #94a3b8 !important; font-size: 14px !important; line-height: 1.7 !important;
 }
 
-/* Download button */
 [data-testid="stDownloadButton"] > button {
-    background: rgba(255,255,255,0.05) !important;
-    border: 1px solid rgba(255,255,255,0.12) !important;
+    background: rgba(255,255,255,0.05) !important; border: 1px solid rgba(255,255,255,0.12) !important;
     border-radius: 10px !important; color: #e2e8f0 !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 14px !important; font-weight: 500 !important;
-    padding: 10px 20px !important;
+    font-family: 'Inter', sans-serif !important; font-size: 14px !important;
+    font-weight: 500 !important; padding: 10px 20px !important;
 }
 [data-testid="stDownloadButton"] > button:hover {
-    background: rgba(255,255,255,0.09) !important;
-    border-color: rgba(139, 92, 246, 0.4) !important;
-    color: #a78bfa !important;
+    background: rgba(255,255,255,0.09) !important; border-color: rgba(139, 92, 246, 0.4) !important; color: #a78bfa !important;
 }
 
-/* Alerts */
 hr { border-color: rgba(255,255,255,0.07) !important; margin: 32px 0 !important; }
 .stSuccess { background: rgba(16,185,129,0.1) !important; border: 1px solid rgba(16,185,129,0.25) !important; border-radius: 12px !important; color: #6ee7b7 !important; }
 .stWarning { background: rgba(245,158,11,0.08) !important; border: 1px solid rgba(245,158,11,0.2) !important; border-radius: 12px !important; color: #fcd34d !important; }
 .stCaption { color: #475569 !important; font-size: 12px !important; }
 [data-testid="stSidebar"] { background: #0d0d16 !important; border-right: 1px solid rgba(255,255,255,0.07) !important; }
 
-/* Privacy footer */
 .privacy-footer {
-    background: rgba(16, 185, 129, 0.05);
-    border: 1px solid rgba(16, 185, 129, 0.15);
-    border-radius: 12px;
-    padding: 20px 24px;
-    margin-top: 40px;
+    background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.15);
+    border-radius: 12px; padding: 20px 24px; margin-top: 40px;
 }
 .privacy-footer-title {
-    font-size: 13px; font-weight: 600;
-    color: #6ee7b7;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
+    font-size: 13px; font-weight: 600; color: #6ee7b7;
+    letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 10px;
 }
 .privacy-footer-list {
-    font-size: 13px;
-    color: #64748b;
-    line-height: 1.9;
-    list-style: none;
-    padding: 0; margin: 0;
+    font-size: 13px; color: #64748b; line-height: 1.9; list-style: none; padding: 0; margin: 0;
 }
-.privacy-footer-list li::before {
-    content: "✓  ";
-    color: #34d399;
-    font-weight: 600;
-}
+.privacy-footer-list li::before { content: "✓  "; color: #34d399; font-weight: 600; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -266,10 +206,10 @@ st.markdown("""
 <div class="hero">
     <div class="hero-badges">
         <span class="hero-badge">🔭 Engineer Recruiting Tool</span>
-        <span class="hero-badge privacy">🔒 個人情報保護法準拠</span>
+        <span class="hero-badge privacy">🔒 Privacy Compliant</span>
     </div>
     <h1>GitScope</h1>
-    <p>GitHubの公開情報だけを使い、エンジニア候補者のスキルを非エンジニアでも理解できる形に変換します。取得した情報はサーバーに一切保存されません。</p>
+    <p>Analyze any GitHub profile and get plain-language insights — no engineering background required. All data stays in your browser.</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -282,33 +222,33 @@ st.markdown('<div class="main-content">', unsafe_allow_html=True)
 with st.sidebar:
     st.markdown("### ⚙️ Settings")
     github_token = st.text_input(
-        "GitHub Token（任意）", type="password",
-        help="未入力でも動作します。入力すると解析上限が増えます（60→5000回/時間）\n\n🔒 トークンはこの画面のみで使用され、外部に送信・保存されません。"
+        "GitHub Token (optional)", type="password",
+        help="Works without a token, but adding one increases the rate limit from 60 to 5,000 requests/hour.\n\n🔒 Your token is used only in this session and is never stored or transmitted."
     )
-    readme_chars = st.slider("README取得文字数", 500, 5000, 2000, step=500)
-    top_repos    = st.slider("解析リポジトリ数",  3,   15,   8)
+    readme_chars = st.slider("README characters (max)", 500, 5000, 2000, step=500)
+    top_repos    = st.slider("Repositories to analyze", 3, 15, 8)
     st.markdown("---")
-    st.markdown("**🔒 プライバシーについて**")
+    st.markdown("**🔒 Privacy**")
     st.markdown("""
-- 取得するのは**公開情報のみ**
-- データはサーバーに**保存されません**
-- 第三者への**送信は行いません**
-- ブラウザを閉じると**情報は消去**されます
+- Only **public** GitHub data is fetched
+- Data is **never stored** on any server
+- Data is **never shared** with third parties
+- Closing this tab **erases all data**
     """)
     st.markdown("---")
-    st.markdown("**使い方**")
-    st.markdown("1. ユーザー名を入力\n2. Analyze をクリック\n3. テキストをコピー\n4. Claude/ChatGPTに貼り付けて質問")
+    st.markdown("**How to use**")
+    st.markdown("1. Enter a GitHub username\n2. Click Analyze\n3. Copy the generated text\n4. Paste into Claude or ChatGPT")
 
 
 # ─────────────────────────────────────────────────────────
-# Privacy Notice Banner
+# Privacy Banner
 # ─────────────────────────────────────────────────────────
 st.markdown("""
 <div class="privacy-banner">
     <div class="privacy-banner-icon">🔒</div>
     <div class="privacy-banner-text">
-        <strong>個人情報の取り扱いについて</strong><br>
-        このツールはGitHubに公開されている情報のみを取得します。取得したデータはお使いのブラウザ上でのみ処理され、外部サーバーへの保存・送信は一切行いません。
+        <strong>Data Privacy Notice</strong><br>
+        GitScope retrieves only publicly available information from GitHub. All data is processed locally in your browser and is never stored on or transmitted to any external server. Please use candidate information solely for recruitment purposes.
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -366,8 +306,8 @@ def fetch_readme(username, repo, headers, max_chars):
     rh["Accept"] = "application/vnd.github.v3.raw"
     r = requests.get("https://api.github.com/repos/" + username + "/" + repo + "/readme", headers=rh)
     if r.status_code == 200:
-        return r.text[:max_chars] + ("\n... [省略]" if len(r.text) > max_chars else "")
-    return "（READMEなし / No README）"
+        return r.text[:max_chars] + ("\n... [truncated]" if len(r.text) > max_chars else "")
+    return "(No README found)"
 
 def fetch_languages(username, repo, headers):
     r = requests.get("https://api.github.com/repos/" + username + "/" + repo + "/languages", headers=headers)
@@ -375,7 +315,7 @@ def fetch_languages(username, repo, headers):
 
 
 # ─────────────────────────────────────────────────────────
-# LLM テキスト生成
+# LLM Text Builders
 # ─────────────────────────────────────────────────────────
 QUESTIONS_JA = [
     "このエンジニアの技術スタックと得意分野を教えてください",
@@ -395,8 +335,7 @@ QUESTIONS_EN = [
     "What type of product development would suit them best?",
 ]
 
-PRIVACY_NOTE_JA = """
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRIVACY_NOTE_JA = """━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 【取り扱い上の注意】
 このデータはGitHubに公開されている情報のみを含みます。
 採用選考の目的にのみ使用し、第三者への提供・目的外利用はお控えください。
@@ -404,16 +343,15 @@ PRIVACY_NOTE_JA = """
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
 
-PRIVACY_NOTE_EN = """
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRIVACY_NOTE_EN = """━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [Data Handling Notice]
-This data contains only publicly available information from GitHub.
-Please use it solely for recruitment purposes and do not share with third parties.
-(Based on Japan's Act on the Protection of Personal Information, Articles 16 & 18)
+This report contains only publicly available information from GitHub.
+Please use it solely for recruitment purposes.
+Do not share with unauthorized third parties.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
 
-def build_repo_block(repos, lang="ja"):
+def build_repo_block(repos, lang="en"):
     lines = []
     label = "主要リポジトリ（スター数順）" if lang == "ja" else "Top Repositories (by stars)"
     lines.append("─" * 60)
@@ -439,7 +377,7 @@ def build_repo_block(repos, lang="ja"):
                 lines.append("   Topics      : " + ', '.join(repo['topics'][:6]))
     return lines
 
-def build_lang_block(lang_summary, lang="ja"):
+def build_lang_block(lang_summary, lang="en"):
     if not lang_summary:
         return []
     lines = []
@@ -520,7 +458,7 @@ def build_llm_text_en(user, repos, lang_summary, top_readme):
 def build_llm_text_bilingual(user, repos, lang_summary, top_readme):
     ja = build_llm_text_ja(user, repos, lang_summary, top_readme)
     en = build_llm_text_en(user, repos, lang_summary, top_readme)
-    sep = "\n\n" + ("━" * 60) + "\n【ENGLISH VERSION below / 英語版は以下】\n" + ("━" * 60) + "\n\n"
+    sep = "\n\n" + ("━" * 60) + "\n— ENGLISH VERSION —\n" + ("━" * 60) + "\n\n"
     return ja + sep + en
 
 
@@ -534,7 +472,7 @@ if analyze_btn and github_input:
     with st.spinner("Fetching data from GitHub..."):
         user = fetch_user(username, headers)
         if not user or "message" in user:
-            st.error("❌  User `" + username + "` not found.")
+            st.error("❌  User `" + username + "` not found. Please check the username.")
             st.stop()
 
         repos = fetch_repos(username, headers, top_repos)
@@ -549,7 +487,7 @@ if analyze_btn and github_input:
         top_repo_name = specific_repo or (repos[0]["name"] if repos else None)
         readme_text = fetch_readme(username, top_repo_name, headers, readme_chars) if top_repo_name else ""
 
-    st.success("✅  Analysis complete for @" + username + "  ·  取得したのは公開情報のみです")
+    st.success("✅  Analysis complete for @" + username + "  ·  Public data only")
     st.divider()
 
     c1, c2, c3, c4 = st.columns(4)
@@ -568,25 +506,25 @@ if analyze_btn and github_input:
     ])
 
     with tab_raw:
-        st.markdown("##### 🌐 出力言語 / Output Language")
+        st.markdown("##### 🌐 Output Language")
         lang_choice = st.radio(
-            "言語を選択",
-            options=["🇯🇵  日本語", "🇺🇸  English", "🇯🇵🇺🇸  両方（Bilingual）"],
+            "lang",
+            options=["🇯🇵  Japanese", "🇺🇸  English", "🇯🇵🇺🇸  Bilingual"],
             horizontal=True,
             label_visibility="collapsed"
         )
 
-        if lang_choice == "🇯🇵  日本語":
+        if lang_choice == "🇯🇵  Japanese":
             llm_text = build_llm_text_ja(user, repos, lang_summary, readme_text)
-            hint  = "👇 このテキストをコピーして **Claude** や **ChatGPT** に貼り付けてください。取り扱い注意文も含まれています。"
+            hint  = "Copy the text below and paste it into **Claude** or **ChatGPT**. A privacy notice is included."
             fname = "gitscope_" + username + "_ja.txt"
         elif lang_choice == "🇺🇸  English":
             llm_text = build_llm_text_en(user, repos, lang_summary, readme_text)
-            hint  = "👇 Copy this text and paste it into **Claude** or **ChatGPT**. A data handling notice is included."
+            hint  = "Copy the text below and paste it into **Claude** or **ChatGPT**. A privacy notice is included."
             fname = "gitscope_" + username + "_en.txt"
         else:
             llm_text = build_llm_text_bilingual(user, repos, lang_summary, readme_text)
-            hint  = "👇 日本語・英語の両バージョンが含まれています。各バージョンに取り扱い注意文が付いています。"
+            hint  = "Both Japanese and English versions are included. Works with any LLM."
             fname = "gitscope_" + username + "_bilingual.txt"
 
         st.caption(hint)
@@ -626,17 +564,17 @@ elif analyze_btn:
 # ─────────────────────────────────────────────────────────
 st.markdown("""
 <div class="privacy-footer">
-    <div class="privacy-footer-title">🔒 個人情報の取り扱いについて</div>
+    <div class="privacy-footer-title">🔒 Privacy & Data Handling</div>
     <ul class="privacy-footer-list">
-        <li>取得するのはGitHubに公開されている情報のみです</li>
-        <li>取得したデータはお使いのブラウザ上でのみ処理されます</li>
-        <li>データは外部サーバーに保存・送信されません</li>
-        <li>ブラウザを閉じると取得した情報はすべて消去されます</li>
-        <li>取得した情報は採用選考の目的にのみご使用ください（個人情報保護法 第16条）</li>
+        <li>Only publicly available GitHub data is retrieved</li>
+        <li>All data is processed locally in your browser — nothing is sent to any server</li>
+        <li>Data is never stored, logged, or shared with third parties</li>
+        <li>Closing this tab permanently erases all retrieved data</li>
+        <li>Please use candidate information solely for recruitment purposes</li>
     </ul>
 </div>
 """, unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
 st.divider()
-st.caption("GitScope — Powered by GitHub REST API  ·  公開情報のみ取得  ·  データ保存なし")
+st.caption("GitScope · Powered by GitHub REST API · Public data only · No data stored")
