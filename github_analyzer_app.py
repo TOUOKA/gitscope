@@ -1,0 +1,521 @@
+import streamlit as st
+import requests
+import time
+
+st.set_page_config(
+    page_title="GitScope — GitHub Profile Analyzer",
+    page_icon="🔭",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
+
+# ─────────────────────────────────────────────────────────
+# Custom CSS
+# ───────────────────────────────────────────────────────── 
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+.stApp { background: #0a0a0f; color: #e2e8f0; }
+#MainMenu, footer, header { visibility: hidden; }
+.block-container { padding: 0 !important; max-width: 100% !important; }
+
+.hero {
+    background: linear-gradient(135deg, #0a0a0f 0%, #1a1040 50%, #0a0a0f 100%);
+    border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+    padding: 60px 80px 48px;
+    position: relative;
+    overflow: hidden;
+}
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%);
+}
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%; right: 5%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+}
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    color: #a78bfa;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 100px;
+    margin-bottom: 20px;
+}
+.hero h1 {
+    font-size: 48px; font-weight: 700; line-height: 1.1;
+    margin: 0 0 16px;
+    background: linear-gradient(135deg, #ffffff 0%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.hero p { font-size: 18px; color: #94a3b8; margin: 0; max-width: 500px; line-height: 1.6; }
+
+.main-content { padding: 48px 80px; max-width: 1200px; margin: 0 auto; }
+
+.search-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 32px; margin-bottom: 40px;
+}
+.search-label {
+    font-size: 13px; font-weight: 500; color: #64748b;
+    letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 12px;
+}
+
+/* ── Input field ─────────────────────────────────── */
+.stTextInput > div > div > input {
+    background: #1e1b2e !important;
+    border: 1.5px solid rgba(139, 92, 246, 0.25) !important;
+    border-radius: 12px !important;
+    /* 入力文字を純白で見やすく */
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    caret-color: #a78bfa !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    padding: 14px 18px !important;
+    height: auto !important;
+    transition: all 0.2s ease !important;
+}
+.stTextInput > div > div > input:focus {
+    border-color: rgba(139, 92, 246, 0.65) !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.18) !important;
+    background: #221d38 !important;
+}
+.stTextInput > div > div > input::placeholder {
+    color: #4a4569 !important;
+    -webkit-text-fill-color: #4a4569 !important;
+    font-style: italic !important;
+}
+/* オートフィル時の白抜き対策 */
+.stTextInput > div > div > input:-webkit-autofill,
+.stTextInput > div > div > input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #1e1b2e inset !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+.stButton > button {
+    background: linear-gradient(135deg, #7c3aed, #4f46e5) !important;
+    color: white !important; border: none !important;
+    border-radius: 12px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 15px !important; font-weight: 600 !important;
+    padding: 14px 28px !important; height: auto !important; width: 100% !important;
+    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3) !important;
+    transition: all 0.2s ease !important;
+}
+.stButton > button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 28px rgba(124, 58, 237, 0.45) !important;
+}
+
+[data-testid="metric-container"] {
+    background: rgba(255,255,255,0.03) !important;
+    border: 1px solid rgba(255,255,255,0.07) !important;
+    border-radius: 14px !important; padding: 20px 24px !important;
+}
+[data-testid="metric-container"]:hover { border-color: rgba(139, 92, 246, 0.3) !important; }
+[data-testid="stMetricLabel"] {
+    font-size: 12px !important; font-weight: 500 !important;
+    letter-spacing: 0.06em !important; text-transform: uppercase !important;
+    color: #64748b !important;
+}
+[data-testid="stMetricValue"] { font-size: 28px !important; font-weight: 700 !important; color: #e2e8f0 !important; }
+
+.stTabs [data-baseweb="tab-list"] {
+    background: rgba(255,255,255,0.03) !important;
+    border-radius: 12px !important; padding: 4px !important;
+    gap: 2px !important; border: 1px solid rgba(255,255,255,0.07) !important;
+}
+.stTabs [data-baseweb="tab"] {
+    background: transparent !important; border-radius: 9px !important;
+    color: #64748b !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 14px !important; font-weight: 500 !important;
+    padding: 8px 18px !important;
+}
+.stTabs [aria-selected="true"] { background: rgba(139, 92, 246, 0.2) !important; color: #a78bfa !important; }
+.stTabs [data-baseweb="tab-highlight"], .stTabs [data-baseweb="tab-border"] { display: none !important; }
+
+.stCodeBlock { border-radius: 12px !important; border: 1px solid rgba(255,255,255,0.07) !important; }
+.stCodeBlock pre { background: rgba(255,255,255,0.02) !important; font-size: 13px !important; line-height: 1.7 !important; }
+
+.streamlit-expanderHeader {
+    background: rgba(255,255,255,0.03) !important;
+    border: 1px solid rgba(255,255,255,0.07) !important;
+    border-radius: 12px !important; color: #e2e8f0 !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 500 !important; font-size: 14px !important;
+    padding: 14px 18px !important;
+}
+.streamlit-expanderHeader:hover {
+    border-color: rgba(139, 92, 246, 0.3) !important;
+    background: rgba(139, 92, 246, 0.05) !important;
+}
+.streamlit-expanderContent {
+    background: rgba(255,255,255,0.02) !important;
+    border: 1px solid rgba(255,255,255,0.06) !important;
+    border-top: none !important; border-radius: 0 0 12px 12px !important;
+    padding: 16px 20px !important; color: #94a3b8 !important;
+    font-size: 14px !important; line-height: 1.7 !important;
+}
+
+[data-testid="stDownloadButton"] > button {
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    border-radius: 10px !important; color: #e2e8f0 !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 14px !important; font-weight: 500 !important;
+    padding: 10px 20px !important;
+}
+[data-testid="stDownloadButton"] > button:hover {
+    background: rgba(255,255,255,0.09) !important;
+    border-color: rgba(139, 92, 246, 0.4) !important;
+    color: #a78bfa !important;
+}
+
+hr { border-color: rgba(255,255,255,0.07) !important; margin: 32px 0 !important; }
+.stSuccess { background: rgba(16,185,129,0.1) !important; border: 1px solid rgba(16,185,129,0.25) !important; border-radius: 12px !important; color: #6ee7b7 !important; }
+.stWarning { background: rgba(245,158,11,0.08) !important; border: 1px solid rgba(245,158,11,0.2) !important; border-radius: 12px !important; color: #fcd34d !important; }
+.stCaption { color: #475569 !important; font-size: 12px !important; }
+[data-testid="stSidebar"] { background: #0d0d16 !important; border-right: 1px solid rgba(255,255,255,0.07) !important; }
+</style>
+""", unsafe_allow_html=True)
+
+
+# ─────────────────────────────────────────────────────────
+# Hero
+# ─────────────────────────────────────────────────────────
+st.markdown("""
+<div class="hero">
+    <div class="hero-badge">🔭 Engineer Recruiting Tool</div>
+    <h1>GitScope</h1>
+    <p>Analyze any GitHub profile and get plain-language insights — no engineering background required.</p>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown('<div class="main-content">', unsafe_allow_html=True)
+
+
+# ─────────────────────────────────────────────────────────
+# Sidebar
+# ─────────────────────────────────────────────────────────
+with st.sidebar:
+    st.markdown("### ⚙️ Settings")
+    github_token = st.text_input(
+        "GitHub Token（任意）", type="password",
+        help="未入力でも動作します。入力すると解析上限が増えます（60→5000回/時間）"
+    )
+    readme_chars = st.slider("README取得文字数", 500, 5000, 2000, step=500)
+    top_repos    = st.slider("解析リポジトリ数",  3,   15,   8)
+    st.markdown("---")
+    st.markdown("**使い方**")
+    st.markdown("1. ユーザー名を入力\n2. Analyze をクリック\n3. テキストをコピー\n4. Claude/ChatGPTに貼り付けて質問")
+
+
+# ─────────────────────────────────────────────────────────
+# Search
+# ─────────────────────────────────────────────────────────
+st.markdown('<div class="search-card">', unsafe_allow_html=True)
+st.markdown('<div class="search-label">GitHub Username or Repository URL</div>', unsafe_allow_html=True)
+
+col1, col2 = st.columns([5, 1])
+with col1:
+    github_input = st.text_input(
+        "input",
+        placeholder="e.g.  torvalds   or   https://github.com/torvalds/linux",
+        label_visibility="collapsed"
+    )
+with col2:
+    st.markdown("<br>", unsafe_allow_html=True)
+    analyze_btn = st.button("Analyze →", use_container_width=True)
+
+st.markdown('</div>', unsafe_allow_html=True)
+
+
+# ─────────────────────────────────────────────────────────
+# Helpers
+# ─────────────────────────────────────────────────────────
+def make_headers(token):
+    h = {"Accept": "application/vnd.github.v3+json"}
+    if token:
+        h["Authorization"] = "token " + token
+    return h
+
+def parse_input(raw):
+    raw = raw.strip().rstrip("/")
+    if "github.com/" in raw:
+        parts = raw.split("github.com/")[-1].split("/")
+        return parts[0], (parts[1] if len(parts) >= 2 else None)
+    return raw, None
+
+def fetch_user(username, headers):
+    r = requests.get("https://api.github.com/users/" + username, headers=headers)
+    return r.json() if r.status_code == 200 else None
+
+def fetch_repos(username, headers, count):
+    r = requests.get(
+        "https://api.github.com/users/" + username + "/repos?sort=stars&per_page=" + str(count),
+        headers=headers
+    )
+    return r.json() if r.status_code == 200 else []
+
+def fetch_readme(username, repo, headers, max_chars):
+    rh = dict(headers)
+    rh["Accept"] = "application/vnd.github.v3.raw"
+    r = requests.get("https://api.github.com/repos/" + username + "/" + repo + "/readme", headers=rh)
+    if r.status_code == 200:
+        return r.text[:max_chars] + ("\n... [省略]" if len(r.text) > max_chars else "")
+    return "（READMEなし / No README）"
+
+def fetch_languages(username, repo, headers):
+    r = requests.get("https://api.github.com/repos/" + username + "/" + repo + "/languages", headers=headers)
+    return r.json() if r.status_code == 200 else {}
+
+
+# ─────────────────────────────────────────────────────────
+# LLM テキスト生成
+# ─────────────────────────────────────────────────────────
+QUESTIONS_JA = [
+    "このエンジニアの技術スタックと得意分野を教えてください",
+    "バックエンド・フロントエンド・インフラのどれが強そうですか？",
+    "経験年数・スキルレベルはどのくらいと推測できますか？",
+    "強みと弱みを、非エンジニアにわかる言葉で説明してください",
+    "スタートアップの少人数チームに向いていますか？",
+    "どんな種類のプロダクト開発に向いていますか？",
+]
+
+QUESTIONS_EN = [
+    "What is this engineer's tech stack and area of expertise?",
+    "Are they stronger in backend, frontend, or infrastructure?",
+    "How many years of experience and what skill level do they appear to have?",
+    "What are their strengths and weaknesses in plain, non-technical language?",
+    "Would they be a good fit for a small startup team?",
+    "What type of product development would suit them best?",
+]
+
+def build_repo_block(repos, lang="ja"):
+    lines = []
+    label = "主要リポジトリ（スター数順）" if lang == "ja" else "Top Repositories (by stars)"
+    lines.append("─" * 60)
+    lines.append(label)
+    lines.append("─" * 60)
+    for repo in repos:
+        stars = repo.get('stargazers_count', 0)
+        rl = repo.get('language') or ('不明' if lang == "ja" else 'Unknown')
+        lines.append("\n📦 " + repo['name'] + "   ⭐ " + str(stars))
+        if lang == "ja":
+            lines.append("   説明     : " + (repo.get('description') or '説明なし'))
+            lines.append("   言語     : " + rl)
+            lines.append("   フォーク : " + str(repo.get('forks_count', 0)))
+            lines.append("   最終更新 : " + repo.get('pushed_at', '')[:10])
+            if repo.get('topics'):
+                lines.append("   トピック : " + ', '.join(repo['topics'][:6]))
+        else:
+            lines.append("   Description : " + (repo.get('description') or 'N/A'))
+            lines.append("   Language    : " + rl)
+            lines.append("   Forks       : " + str(repo.get('forks_count', 0)))
+            lines.append("   Last updated: " + repo.get('pushed_at', '')[:10])
+            if repo.get('topics'):
+                lines.append("   Topics      : " + ', '.join(repo['topics'][:6]))
+    return lines
+
+def build_lang_block(lang_summary, lang="ja"):
+    if not lang_summary:
+        return []
+    lines = []
+    label = "使用言語の傾向（コード量ベース）" if lang == "ja" else "Language Breakdown (by code volume)"
+    lines.append("")
+    lines.append("─" * 60)
+    lines.append(label)
+    lines.append("─" * 60)
+    total = sum(lang_summary.values())
+    for l, b in sorted(lang_summary.items(), key=lambda x: -x[1]):
+        pct = b / total * 100
+        bar = "█" * int(pct / 5)
+        lines.append("  " + l.ljust(20) + " " + bar.ljust(20) + " " + str(round(pct, 1)) + "%")
+    return lines
+
+def build_llm_text_ja(user, repos, lang_summary, top_readme):
+    lines = []
+    lines.append("=" * 60)
+    lines.append("【GitHubプロフィール解析: @" + user['login'] + "】")
+    lines.append("=" * 60)
+    lines.append("名前         : " + (user.get('name') or '未設定'))
+    lines.append("自己紹介     : " + (user.get('bio') or '未設定'))
+    lines.append("所属         : " + (user.get('company') or '未設定'))
+    lines.append("場所         : " + (user.get('location') or '未設定'))
+    lines.append("公開リポジトリ: " + str(user.get('public_repos', 0)) + " 件")
+    lines.append("フォロワー   : " + str(user.get('followers', 0)) + " 人")
+    lines.append("アカウント作成: " + user.get('created_at', '')[:10])
+    if user.get('blog'):
+        lines.append("ウェブサイト  : " + user['blog'])
+    lines.append("")
+    lines += build_repo_block(repos, "ja")
+    lines += build_lang_block(lang_summary, "ja")
+    if top_readme and repos:
+        lines.append("")
+        lines.append("─" * 60)
+        lines.append("【代表リポジトリ README: " + repos[0]['name'] + "】")
+        lines.append("─" * 60)
+        lines.append(top_readme)
+    lines.append("")
+    lines.append("=" * 60)
+    lines.append("【LLMへの推奨質問例】")
+    lines.append("=" * 60)
+    for i, q in enumerate(QUESTIONS_JA, 1):
+        lines.append("  Q" + str(i) + ". " + q)
+    return "\n".join(lines)
+
+def build_llm_text_en(user, repos, lang_summary, top_readme):
+    lines = []
+    lines.append("=" * 60)
+    lines.append("GitHub Profile Analysis: @" + user['login'])
+    lines.append("=" * 60)
+    lines.append("Name        : " + (user.get('name') or 'N/A'))
+    lines.append("Bio         : " + (user.get('bio') or 'N/A'))
+    lines.append("Company     : " + (user.get('company') or 'N/A'))
+    lines.append("Location    : " + (user.get('location') or 'N/A'))
+    lines.append("Public Repos: " + str(user.get('public_repos', 0)))
+    lines.append("Followers   : " + str(user.get('followers', 0)))
+    lines.append("Member since: " + user.get('created_at', '')[:10])
+    if user.get('blog'):
+        lines.append("Website     : " + user['blog'])
+    lines.append("")
+    lines += build_repo_block(repos, "en")
+    lines += build_lang_block(lang_summary, "en")
+    if top_readme and repos:
+        lines.append("")
+        lines.append("─" * 60)
+        lines.append("README — " + repos[0]['name'])
+        lines.append("─" * 60)
+        lines.append(top_readme)
+    lines.append("")
+    lines.append("=" * 60)
+    lines.append("Suggested questions for Claude / ChatGPT")
+    lines.append("=" * 60)
+    for i, q in enumerate(QUESTIONS_EN, 1):
+        lines.append("  Q" + str(i) + ". " + q)
+    return "\n".join(lines)
+
+def build_llm_text_bilingual(user, repos, lang_summary, top_readme):
+    ja = build_llm_text_ja(user, repos, lang_summary, top_readme)
+    en = build_llm_text_en(user, repos, lang_summary, top_readme)
+    sep = "\n\n" + ("━" * 60) + "\n【ENGLISH VERSION below / 英語版は以下】\n" + ("━" * 60) + "\n\n"
+    return ja + sep + en
+
+
+# ─────────────────────────────────────────────────────────
+# Analyze
+# ─────────────────────────────────────────────────────────
+if analyze_btn and github_input:
+    username, specific_repo = parse_input(github_input)
+    headers = make_headers(github_token)
+
+    with st.spinner("Fetching data from GitHub..."):
+        user = fetch_user(username, headers)
+        if not user or "message" in user:
+            st.error("❌  User `" + username + "` not found.")
+            st.stop()
+
+        repos = fetch_repos(username, headers, top_repos)
+        time.sleep(0.3)
+
+        lang_summary = {}
+        for repo in repos[:5]:
+            for lang, bytes_ in fetch_languages(username, repo["name"], headers).items():
+                lang_summary[lang] = lang_summary.get(lang, 0) + bytes_
+            time.sleep(0.2)
+
+        top_repo_name = specific_repo or (repos[0]["name"] if repos else None)
+        readme_text = fetch_readme(username, top_repo_name, headers, readme_chars) if top_repo_name else ""
+
+    st.success("✅  Analysis complete for @" + username)
+    st.divider()
+
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Public Repos",     str(user.get('public_repos', 0)))
+    c2.metric("Followers",        str(user.get('followers', 0)))
+    c3.metric("Repos Analyzed",   str(len(repos)))
+    top_lang = max(lang_summary, key=lang_summary.get) if lang_summary else "N/A"
+    c4.metric("Primary Language", top_lang)
+
+    st.divider()
+
+    tab_raw, tab_repos, tab_langs = st.tabs([
+        "📋  LLM-ready Text",
+        "📦  Repositories",
+        "📊  Language Breakdown"
+    ])
+
+    with tab_raw:
+        st.markdown("##### 🌐 出力言語 / Output Language")
+        lang_choice = st.radio(
+            "言語を選択",
+            options=["🇯🇵  日本語", "🇺🇸  English", "🇯🇵🇺🇸  両方（Bilingual）"],
+            horizontal=True,
+            label_visibility="collapsed"
+        )
+
+        if lang_choice == "🇯🇵  日本語":
+            llm_text = build_llm_text_ja(user, repos, lang_summary, readme_text)
+            hint  = "👇 このテキストをコピーして **Claude** や **ChatGPT** に貼り付けてください"
+            fname = "gitscope_" + username + "_ja.txt"
+        elif lang_choice == "🇺🇸  English":
+            llm_text = build_llm_text_en(user, repos, lang_summary, readme_text)
+            hint  = "👇 Copy this text and paste it into **Claude** or **ChatGPT**."
+            fname = "gitscope_" + username + "_en.txt"
+        else:
+            llm_text = build_llm_text_bilingual(user, repos, lang_summary, readme_text)
+            hint  = "👇 日本語・英語の両バージョンが含まれています。"
+            fname = "gitscope_" + username + "_bilingual.txt"
+
+        st.caption(hint)
+        st.code(llm_text, language=None)
+        st.download_button(
+            label="⬇  Download as .txt",
+            data=llm_text,
+            file_name=fname,
+            mime="text/plain"
+        )
+
+    with tab_repos:
+        for repo in repos:
+            with st.expander("📦  " + repo['name'] + "   ⭐ " + str(repo.get('stargazers_count', 0))):
+                st.markdown("**Description**: " + (repo.get('description') or 'N/A'))
+                st.markdown("**Language**: `" + (repo.get('language') or 'Unknown') + "`")
+                st.markdown("**Forks**: " + str(repo.get('forks_count', 0)))
+                st.markdown("**Last updated**: " + repo.get('pushed_at', '')[:10])
+                if repo.get('topics'):
+                    st.markdown("**Topics**: " + ', '.join(repo['topics']))
+                st.markdown("[View on GitHub ↗](" + repo['html_url'] + ")")
+
+    with tab_langs:
+        if lang_summary:
+            total = sum(lang_summary.values())
+            st.bar_chart({l: round(v / total * 100, 1) for l, v in sorted(lang_summary.items(), key=lambda x: -x[1])})
+            st.caption("Language distribution by lines of code (%)")
+        else:
+            st.info("No language data available.")
+
+elif analyze_btn:
+    st.warning("Please enter a GitHub username or URL.")
+
+st.markdown('</div>', unsafe_allow_html=True)
+st.divider()
+st.caption("GitScope — Public data only. No private repositories are accessed. Powered by GitHub REST API.")
