@@ -153,6 +153,9 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 [data-testid="stDownloadButton"] > button:hover { background: rgba(255,255,255,0.09) !important; border-color: rgba(139,92,246,0.4) !important; color: #a78bfa !important; }
 
 hr { border-color: rgba(255,255,255,0.07) !important; margin: 32px 0 !important; }
+
+/* Align Analyze button with the text input without using a <br> spacer */
+div[data-testid="column"]:last-child .stButton { margin-top: 28px; }
 .stSuccess { background: rgba(16,185,129,0.1) !important; border: 1px solid rgba(16,185,129,0.25) !important; border-radius: 12px !important; color: #6ee7b7 !important; }
 .stWarning { background: rgba(245,158,11,0.08) !important; border: 1px solid rgba(245,158,11,0.2) !important; border-radius: 12px !important; color: #fcd34d !important; }
 .stCaption { color: #475569 !important; font-size: 12px !important; }
@@ -271,7 +274,6 @@ with col1:
         label_visibility="collapsed"
     )
 with col2:
-    st.markdown("<br>", unsafe_allow_html=True)
     analyze_btn = st.button("Analyze →", use_container_width=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
@@ -707,3 +709,4 @@ st.markdown("""
 st.markdown('</div>', unsafe_allow_html=True)
 st.divider()
 st.caption("GitScope · Powered by GitHub REST API · Public data only · No data stored")
+
